@@ -1,0 +1,85 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f3f4f6, #e0e7ff);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Header Section */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    background: linear-gradient(90deg, #4CAF50, #66bb6a);
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #4CAF50;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Attendance Table */
+.attendance-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.attendance-section table thead {
+    background: linear-gradient(90deg, #4CAF50, #66bb6a);
+    color: white;
+}
+
+.attendance-section table th,
+.attendance-section table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.attendance-section table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.attendance-section table tr:hover {
+    background: #eef5f9;
+    transform: scale(1.01);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Footer Section */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 30px;
+    background: #f7f7f7;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}

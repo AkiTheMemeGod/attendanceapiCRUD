@@ -1,0 +1,107 @@
+/* General Page Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the content */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.stat-item {
+    background-color: #4CAF50;
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.stat-item h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.stat-item p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Actions Section */
+.actions {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.actions h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-buttons .btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-buttons .btn-primary {
+    background-color: #4CAF50;
+}
+
+.action-buttons .btn-primary:hover {
+    background-color: #45a049;
+}
+
+.action-buttons .btn-secondary {
+    background-color: #008CBA;
+}
+
+.action-buttons .btn-secondary:hover {
+    background-color: #007B9E;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 40px;
+    color: #555;
+}

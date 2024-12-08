@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Attendance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Panel - Mark Attendance</h1>
+
+        <!-- Attendance Section -->
+        <section class="attendance-section">
+            <h2>Mark Attendance</h2>
+
+            <form id="attendanceForm">
+                <label for="subject">Select Subject:</label>
+                <select id="subject" required>
+                    <option value="cs1">CS1</option>
+                    <option value="cs2">CS2</option>
+                    <option value="cs3">CS3</option>
+                    <option value="cs4">CS4</option>
+                    <option value="cs5">CS5</option>
+                </select>
+
+                <h3>Roll Numbers</h3>
+                <div class="rolls-container">
+                    {% for roll in rolls %}
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="roll_{{ roll }}" value="{{ roll }}">
+                        <label for="roll_{{ roll }}">Roll {{ roll }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" id="markPresentBtn">Mark Present</button>
+                <button type="submit" id="markAbsentBtn">Mark Absent</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        // Handling both Mark Present and Mark Absent functionalities
+        document.getElementById('attendanceForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const subject = document.getElementById('subject').value;
+            const selectedRollnos = [];
+
+            // Get all selected checkboxes
+            const checkboxes = document.querySelectorAll('.checkbox-container input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => {
+                selectedRollnos.push(checkbox.value);
+            });
+
+            if (selectedRollnos.length === 0) {
+                alert('Please select at least one roll number.');
+                return;
+            }
+
+            const isMarkPresent = event.submitter.id === 'markPresentBtn';  // Check which button was clicked
+
+            const url = isMarkPresent ? '/mark_only_present' : '/mark_only_absent';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `roll=${selectedRollnos.join(',')}&subject=${subject}`,
+            });
+
+            if (response.ok) {
+                alert(isMarkPresent ? 'Attendance marked as present!' : 'Attendance marked as absent!');
+            } else {
+                alert('Failed to mark attendance.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Attendance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='attendance.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>View Attendance</h1>
+        </header>
+
+        <section class="attendance-section">
+            <h2>All Students' Attendance</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Name</th>
+                        <th>CS1</th>
+                        <th>CS2</th>
+                        <th>CS3</th>
+                        <th>CS4</th>
+                        <th>CS5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in attendance_data %}
+                    <tr>
+                        <td>{{ student.rollno }}</td>
+                        <td>{{ student.name }}</td>
+                        {% for attendance in student.attendance %}
+                        <td>{{ attendance }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Attendance Management</p>
+        </footer>
+    </div>
+</body>
+</html>

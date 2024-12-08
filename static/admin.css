@@ -1,0 +1,134 @@
+/* General Page Layout */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f3f4f6, #e0e7ff);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Container for the content */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+/* Attendance Section */
+.attendance-section h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+form select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    transition: border 0.3s ease-in-out;
+}
+
+form select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Checkbox and Roll Numbers */
+.rolls-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    background: #f7f7f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.checkbox-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.checkbox-container input {
+    width: 18px;
+    height: 18px;
+    accent-color: #4CAF50;
+}
+
+.checkbox-container label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Buttons Styling */
+form button {
+    width: 200px;
+    align-self: center;
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #4CAF50, #66bb6a);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(90deg, #45a049, #57a762);
+}
+
+/* Separate Styles for Each Button */
+#markPresentBtn {
+    background: linear-gradient(90deg, #4CAF50, #66bb6a);
+}
+
+#markAbsentBtn {
+    background: linear-gradient(90deg, #f44336, #e57373);
+}
+
+#markAbsentBtn:hover {
+    background: linear-gradient(90deg, #d32f2f, #e64a48);
+}

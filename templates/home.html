@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Class Attendance System</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <h2>{{ student_count }}</h2>
+                    <p>Students</p>
+                </div>
+                <div class="stat-item">
+                    <h2>{{ subject_count }}</h2>
+                    <p>Subjects</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="actions">
+            <h2>Actions</h2>
+            <div class="action-buttons">
+                <a href="/admin" class="btn btn-primary">Go to Admin Panel</a>
+                <a href="/fetch_attendance" class="btn btn-secondary">View Attendance</a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Class Attendance System</p>
+        </footer>
+    </div>
+</body>
+</html>
