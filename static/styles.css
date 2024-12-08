@@ -4,11 +4,16 @@ body {
     background-color: #f4f7fa;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Make the body take full height */
 }
 
 /* Container for the content */
 .container {
     max-width: 1200px;
+    width: 50%; /* Ensure it takes full width until max-width is reached */
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;

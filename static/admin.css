@@ -132,3 +132,27 @@ form button:hover {
 #markAbsentBtn:hover {
     background: linear-gradient(90deg, #d32f2f, #e64a48);
 }
+/* Logout Button Styling */
+.nav .btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #f44336, #e57373);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav .btn:hover {
+    background: linear-gradient(90deg, #d32f2f, #e53935);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

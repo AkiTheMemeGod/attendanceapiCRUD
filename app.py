@@ -1,10 +1,15 @@
-from flask import Flask, request, render_template, jsonify, g
+from flask import Flask, request, render_template, session, redirect, url_for, g
 import sqlite3 as sq
 from assets import Database, Fetch  # Your classes
 
 app = Flask(__name__)
 
-# Database connection setup
+app.secret_key = "your_secret_key"  # Used to secure sessions
+
+# Hardcoded admin credentials
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "password123"
+
 def get_db():
     if "db" not in g:
         g.db = sq.connect("student.db")
@@ -27,12 +32,34 @@ def homepage():
 
     return render_template("home.html", student_count=student_count, subject_count=subject_count)
 
+@app.route("/admin_login", methods=["GET", "POST"])
+def admin_login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+            session["admin_logged_in"] = True
+            return redirect(url_for("admin_page"))
+        else:
+            return render_template("admin_login.html", error="Invalid username or password")
+    return render_template("admin_login.html")
+
+# Admin panel route (protected)
 @app.route("/admin")
 def admin_page():
+    if not session.get("admin_logged_in"):
+        return redirect(url_for("admin_login"))
+
     connection = get_db()
     fetcher = Fetch(connection)
     all_rolls = fetcher.fetch_all_rolls()
     return render_template("admin.html", rolls=all_rolls)
+
+# Logout route
+@app.route("/logout")
+def logout():
+    session.pop("admin_logged_in", None)
+    return redirect(url_for("admin_login"))
 
 @app.route("/add_student", methods=["POST"])
 def add_student():

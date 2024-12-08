@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Attendance</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 </head>
 <body>
     <div class="container">
+    <header class="header">
+            <h1>Admin Panel</h1>
+            <div class="nav">
+                <!-- Add a logout button -->
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+            </div>
+        </header>
         <h1>Admin Panel - Mark Attendance</h1>
 
         <!-- Attendance Section -->

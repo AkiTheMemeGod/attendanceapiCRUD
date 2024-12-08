@@ -1,0 +1,120 @@
+/* General Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #222; /* Set default background to dark */
+    overflow: hidden; /* Prevent any overflow from the body */
+    position: relative; /* Allow positioning of glow effect */
+    transition: background 0.3s ease;
+}
+
+/* Login Container */
+.login-container {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 10; /* Make sure it stays on top of any glow effect */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Heading */
+h1 {
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    color: #333; /* Make heading dark in light mode */
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #f9f9f9;
+    box-sizing: border-box;
+    transition: border 0.3s ease-in-out;
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
+}
+
+input::placeholder {
+    color: #bbb;
+    font-size: 0.95rem;
+}
+
+/* Login Button */
+.btn-login {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.2);
+}
+
+/* Error Message */
+.error {
+    color: #e53935;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* Glow Effect */
+body:hover {
+    background: #000; /* Body background becomes black */
+}
+
+body:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 0, 0.1); /* Light yellow glow */
+    pointer-events: none; /* Prevent interference with interactions */
+    z-index: -1; /* Make sure it stays in the background */
+    animation: glow 1s ease-in-out infinite; /* Apply a glowing animation */
+}
+
+/* Animation for Glowing Effect */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 255, 0, 0.2), 0 0 30px rgba(255, 255, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 255, 0, 0.3), 0 0 60px rgba(255, 255, 0, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 255, 0, 0.2), 0 0 30px rgba(255, 255, 0, 0.3);
+    }
+}
