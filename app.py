@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect, url_for, g
+from flask import Flask, request, render_template, session, redirect, url_for, g, jsonify
 import sqlite3 as sq
 from assets import Database, Fetch  # Your classes
 
@@ -154,6 +154,80 @@ def advanced_options():
 
     return render_template("advanced_options.html")
 
+
+@app.route("/api/add_student", methods=["POST"])
+def api_add_student():
+    data = request.get_json()
+    rollno = data.get("rollno")
+    name = data.get("name")
+    email = data.get("email")
+    connection = get_db()
+    db = Database(connection)
+    db.rollinit(rollno, name, email)
+    return jsonify({"message": "Student added successfully!"}), 201
+
+@app.route("/api/mark_attendance", methods=["POST"])
+def api_mark_attendance():
+    data = request.get_json()
+    rollno = data.get("rollno")
+    subject = data.get("subject")
+    connection = get_db()
+    db = Database(connection)
+    db.attendance(rollno, subject)
+    return jsonify({"message": f"Attendance marked for rollno {rollno} for subject {subject}"}), 200
+
+@app.route("/api/fetch_attendance", methods=["GET"])
+def api_fetch_attendance():
+    connection = get_db()
+    fetcher = Fetch(connection)
+    all_rolls = fetcher.fetch_all_rolls()
+
+    attendance_data = []
+    for rollno in all_rolls:
+        student_data = fetcher.fetch_all_attendance(rollno)
+        attendance_data.append({
+            "rollno": rollno,
+            "name": student_data[1],
+            "attendance": student_data[3:]
+        })
+
+    return jsonify(attendance_data)
+
+@app.route("/api/reset_attendance", methods=["POST"])
+def api_reset_attendance():
+    data = request.get_json()
+    rollno = data.get("rollno")
+    subject = data.get("subject")
+    connection = get_db()
+    db = Database(connection)
+    db.reset_attendance(rollno, subject)
+    return jsonify({"message": f"Attendance reset for rollno {rollno} for subject {subject}"}), 200
+
+@app.route("/api/mark_only_absent", methods=["POST"])
+def api_mark_only_absent():
+    data = request.get_json()
+    roll = data.get("roll").split(',')  # List of roll numbers
+    subject = data.get("subject")
+    db = Database(get_db())
+    db.mark_only_absent(roll, subject)
+    return jsonify({"message": "Attendance marked as absent for selected roll numbers"}), 200
+
+@app.route("/api/mark_only_present", methods=["POST"])
+def api_mark_only_present():
+    data = request.get_json()
+    roll = data.get("roll").split(',')  # List of roll numbers
+    subject = data.get("subject")
+    db = Database(get_db())
+    db.mark_only_present(roll, subject)
+    return jsonify({"message": "Attendance marked as present for selected roll numbers"}), 200
+
+@app.route("/api/rolls", methods=["GET"])
+def api_fetch_rolls():
+    connection = get_db()
+    fetcher = Fetch(connection)
+    all_rolls = fetcher.fetch_all_rolls()
+
+    return jsonify(all_rolls)
 
 if __name__ == "__main__":
     app.run(debug=True)
