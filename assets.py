@@ -86,12 +86,11 @@ class Fetch(Database):
         x = cur.fetchone()
         x = [i for i in x]
         return x
+
     def fetch_all_rolls(self):
         cur = self.connection.cursor()
         cur.execute(f"SELECT rollno FROM ATTENDANCE")
         x = cur.fetchall()
         x = [i[0] for i in x]
         return x
-
-
 

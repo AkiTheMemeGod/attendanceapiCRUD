@@ -156,3 +156,100 @@ form button:hover {
     transform: translateY(0);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f;
+}
+/* Styling for the Advanced Options Section */
+.options-section {
+    margin-top: 30px;
+}
+
+.options-section h2 {
+    font-size: 1.8rem;
+    color: #4CAF50;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+form input, form select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background: #f7f7f7;
+}
+
+form input:focus, form select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    transform: translateY(-2px);
+}
+
+/* Add Student Button */
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Reset Attendance Button */
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+}

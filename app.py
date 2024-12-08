@@ -59,7 +59,7 @@ def admin_page():
 @app.route("/logout")
 def logout():
     session.pop("admin_logged_in", None)
-    return redirect(url_for("admin_login"))
+    return redirect(url_for("homepage"))
 
 @app.route("/add_student", methods=["POST"])
 def add_student():
@@ -129,6 +129,32 @@ def mark_only_present():
     return "Attendance marked as present for selected roll numbers"
 
 
+@app.route("/advanced_options", methods=["GET", "POST"])
+def advanced_options():
+    if not session.get("admin_logged_in"):
+        return redirect(url_for("admin_login"))
+    connection = get_db()
+    db = Database(connection)
+    fetcher = Fetch(connection)
+
+    if request.method == "POST":
+        if 'add_student' in request.form:
+            rollno = request.form.get('rollno')
+            name = request.form.get('name')
+            email = request.form.get('email')
+            db.rollinit(rollno, name, email)  # Call the method to add student
+            return "Student added successfully!"
+
+        elif 'reset_attendance' in request.form:
+            rollno = request.form.get('reset_rollno')
+            subject = request.form.get('reset_subject')
+            db.reset_attendance(rollno, subject)  # Call the method to reset attendance
+            return f"Attendance reset for rollno {rollno} for subject {subject}"
+
+
+    return render_template("advanced_options.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+

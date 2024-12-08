@@ -14,6 +14,9 @@
             <h1>Admin Panel</h1>
             <div class="nav">
                 <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+                <a href="{{ url_for('advanced_options') }}" class="btn btn-secondary">Advanced Options</a>  <!-- New Button -->
+                <a href="{{ url_for('homepage') }}" class="btn btn-secondary">Home</a>  <!-- New Button -->
+
             </div>
         </header>
         <h1>Admin Panel - Mark Attendance</h1>
@@ -36,7 +39,7 @@
                     {% for roll in rolls %}
                     <div class="checkbox-container">
                         <input type="checkbox" id="roll_{{ roll }}" value="{{ roll }}">
-                        <label for="roll_{{ roll }}">Roll {{ roll }}</label>
+                        <label for="roll_{{ roll }}">{{ roll }}</label>
                     </div>
                     {% endfor %}
                 </div>
@@ -45,6 +48,12 @@
                 <button type="submit" id="markAbsentBtn">Mark Absent</button>
             </form>
         </section>
+    <footer>
+            <p>&copy; 2025 CS B Attendance Management</p>
+            <a href="https://www.github.com/AkiTheMemeGod/">Developed By Akash</a>
+
+
+        </footer>
     </div>
 
     <script>

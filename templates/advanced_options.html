@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Advanced Options</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Advanced Options</h1>
+            <div class="nav">
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+                <a href="{{ url_for('admin_page') }}" class="btn btn-secondary">Back to Admin Panel</a>
+            </div>
+        </header>
+
+        <section class="options-section">
+            <h2>Advanced Actions</h2>
+
+            <!-- Add Student Form -->
+            <form method="POST">
+                <h3>Add Student</h3>
+                <label for="rollno">Roll Number:</label>
+                <input type="text" id="rollno" name="rollno" required>
+
+                <label for="name">Student Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <button type="submit" name="add_student" class="btn btn-primary">Add Student</button>
+            </form>
+
+            <!-- Reset Attendance Form -->
+            <form method="POST">
+                <h3>Reset Attendance</h3>
+                <label for="reset_rollno">Roll Number:</label>
+                <input type="text" id="reset_rollno" name="reset_rollno" required>
+
+                <label for="reset_subject">Subject:</label>
+                <select id="reset_subject" name="reset_subject" required>
+                    <option value="cs1">CS1</option>
+                    <option value="cs2">CS2</option>
+                    <option value="cs3">CS3</option>
+                    <option value="cs4">CS4</option>
+                    <option value="cs5">CS5</option>
+                </select>
+
+                <button type="submit" name="reset_attendance" class="btn btn-danger">Reset Attendance</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
