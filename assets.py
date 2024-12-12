@@ -1,7 +1,9 @@
 import sqlite3 as sq
-
+from datetime import datetime
+import json
 
 class Database:
+
     def __init__(self, connection=None):
         if connection:
             self.connection = connection
@@ -26,51 +28,90 @@ class Database:
         cursor.execute(update_query, (rollno,))
         self.connection.commit()
 
-    def mark_only_absent(self, roll: list, sub):
-        """
-        Increment the attendance for a given subject for all roll numbers
-        except those in the provided list.
-        """
-        cursor = self.connection.cursor()
-
-        placeholders = ', '.join(['?'] * len(roll))
-        update_query = f"""
-               UPDATE ATTENDANCE
-               SET {sub} = {sub} + 1
-               WHERE rollno NOT IN ({placeholders});
-           """
-
-        cursor.execute(update_query, roll)
-        self.connection.commit()
-
     def mark_only_present(self, roll: list, sub):
         """
-        Increment the attendance for a given subject only for roll numbers
-        in the provided list.
+        Mark attendance as present for specified roll numbers in the given subject
+        and update the attendance history, ensuring the subject is recorded as present.
         """
         cursor = self.connection.cursor()
+        date = datetime.now().strftime("%Y-%m-%d")
+
+        for rollno in roll:
+            cursor.execute(f"UPDATE ATTENDANCE SET {sub} = {sub} + 1 WHERE rollno = ?", (rollno,))
+
+            cursor.execute("SELECT history FROM ATTENDANCE WHERE rollno = ?", (rollno,))
+            history = cursor.fetchone()[0]  # Get history JSON string
+
+            if history != '{}':
+                history = json.loads(history)
+            else:
+                history = {date: []}
+
+            if date not in history:
+                history[date] = []
+
+            if sub in history[date]:
+                history[date].remove(sub)
+
+            if sub not in history[date]:
+                history[date].append(sub)
+
+            cursor.execute(
+                "UPDATE ATTENDANCE SET history = ? WHERE rollno = ?",
+                (json.dumps(history), rollno)
+            )
+
+        self.connection.commit()
+
+    def mark_only_absent(self, roll: list, sub):
+        """
+        Mark attendance as absent for all roll numbers except the ones in the list,
+        and update the attendance history to reflect the absence for the specified subject.
+        """
+        cursor = self.connection.cursor()
+        date = datetime.now().strftime("%Y-%m-%d")
 
         placeholders = ', '.join(['?'] * len(roll))
-        update_query = f"""
-               UPDATE ATTENDANCE
-               SET {sub} = {sub} + 1
-               WHERE rollno IN ({placeholders});
-           """
+        cursor.execute(f"""
+            UPDATE ATTENDANCE
+            SET {sub} = {sub} + 1
+            WHERE rollno NOT IN ({placeholders})
+        """, roll)
 
-        cursor.execute(update_query, roll)
+        cursor.execute("SELECT rollno, history FROM ATTENDANCE")
+        rows = cursor.fetchall()
+
+        for rollno, history in rows:
+            if rollno in roll:
+                continue
+
+            history = json.loads(history) if history != '{}' else {date: []}
+
+            if date not in history:
+                history[date] = []
+
+            if sub not in history[date]:
+                history[date].append(sub)
+
+            cursor.execute(
+                "UPDATE ATTENDANCE SET history = ? WHERE rollno = ?",
+                (json.dumps(history), rollno)
+            )
+
         self.connection.commit()
 
     def rollinit(self, rollno, name, email):
-        data = (rollno, name, email, 0, 0, 0, 0, 0)
+        data = (rollno, name, email, 0, 0, 0, 0, 0,"{}")
         cursor = self.connection.cursor()
-        cursor.execute("INSERT INTO ATTENDANCE values (?,?,?,?,?,?,?,?)", data)
-        self.connection.commit()
-    def reset_attendance(self,roll, sub):
-        data = (roll,)
-        cursor = self.connection.cursor()
-        cursor.execute(f"UPDATE ATTENDANCE set {sub}=0 where rollno =?", data)
+        cursor.execute("INSERT INTO ATTENDANCE values (?,?,?,?,?,?,?,?,?)", data)
         self.connection.commit()
 
+    def reset_attendance(self,roll, sub):
+        x = '{}'
+        data = (roll,)
+        cursor = self.connection.cursor()
+        cursor.execute("UPDATE ATTENDANCE set %s=0, history='{}' where rollno =?"%sub,data)
+        self.connection.commit()
 
 
 class Fetch(Database):
@@ -94,3 +135,32 @@ class Fetch(Database):
         x = [i[0] for i in x]
         return x
 
+    def fetch_daily_absentees(self, date, sub):
+        """
+        Fetch the list of roll numbers of students who were absent on a specific date
+        for a specific subject.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT rollno, history FROM ATTENDANCE")
+        rows = cursor.fetchall()
+
+        absent_rollnos = []
+
+        for rollno, history in rows:
+            try:
+                if history == '{}':
+                    absent_rollnos.append(rollno[-3:])
+                    continue
+
+                history_dict = json.loads(history)
+
+                if date not in history_dict:
+                    absent_rollnos.append(rollno[-3:])
+                    continue
+                if date in history_dict and sub not in history_dict[date]:
+                    absent_rollnos.append(rollno[-3:])
+
+            except (json.JSONDecodeError, KeyError, TypeError) as e:
+                print(f"Error processing roll number {rollno}: {e}")
+
+        return absent_rollnos
