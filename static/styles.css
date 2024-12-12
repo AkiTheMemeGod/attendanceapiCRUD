@@ -7,13 +7,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Make the body take full height */
+    height: 100vh;
 }
 
-/* Container for the content */
 .container {
     max-width: 1200px;
-    width: 50%; /* Ensure it takes full width until max-width is reached */
+    width: 80%;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -21,7 +20,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Styling */
+/* Header */
 .header {
     text-align: center;
     margin-bottom: 30px;
@@ -30,35 +29,34 @@ body {
 .header h1 {
     font-size: 2.5rem;
     color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .stats {
     display: flex;
     justify-content: center;
     gap: 40px;
+    margin-bottom: 30px;
 }
 
 .stat-item {
     background-color: #4CAF50;
     padding: 20px;
     border-radius: 10px;
-    width: 150px;
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .stat-item h2 {
     font-size: 2rem;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
-.stat-item p {
-    font-size: 1rem;
-    margin: 0;
+/* Absentees Section */
+.attendance-section {
+    margin-top: 20px;
 }
-
 /* Actions Section */
 .actions {
     text-align: center;
@@ -103,10 +101,66 @@ body {
     background-color: #007B9E;
 }
 
+.attendance-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.subject-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.subject-card {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.subject-card h3 {
+    margin-bottom: 10px;
+    color: #4CAF50;
+    font-size: 1.5rem;
+}
+
+.subject-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+
+}
+
+.subject-card ul li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: bold;
+    font-family: "Poppins";
+
+}
+
+.subject-card ul li:last-child {
+    border-bottom: none;
+}
+
 /* Footer */
 footer {
     text-align: center;
     font-size: 0.9rem;
     margin-top: 40px;
     color: #555;
+}
+
+footer a {
+    color: #4CAF50;
+    text-decoration: none;
 }
