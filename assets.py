@@ -40,18 +40,15 @@ class Database:
             cursor.execute(f"UPDATE ATTENDANCE SET {sub} = {sub} + 1 WHERE rollno = ?", (rollno,))
 
             cursor.execute("SELECT history FROM ATTENDANCE WHERE rollno = ?", (rollno,))
-            history = cursor.fetchone()[0]  # Get history JSON string
+            result = cursor.fetchone()
 
-            if history != '{}':
-                history = json.loads(history)
-            else:
-                history = {date: []}
+            # Check if a result is returned, otherwise initialize history
+            history = result[0] if result else '{}'
+
+            history = json.loads(history) if history != '{}' else {date: []}
 
             if date not in history:
                 history[date] = []
-
-            if sub in history[date]:
-                history[date].remove(sub)
 
             if sub not in history[date]:
                 history[date].append(sub)
@@ -159,6 +156,36 @@ class Fetch(Database):
                     continue
                 if date in history_dict and sub not in history_dict[date]:
                     absent_rollnos.append(rollno[-3:])
+
+            except (json.JSONDecodeError, KeyError, TypeError) as e:
+                print(f"Error processing roll number {rollno}: {e}")
+
+        return absent_rollnos
+
+    def fetch_daily_absentees_with_mail(self, date, sub):
+        """
+        Fetch the list of roll numbers of students who were absent on a specific date
+        for a specific subject.
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT rollno,email,history FROM ATTENDANCE")
+        rows = cursor.fetchall()
+
+        absent_rollnos = {}
+
+        for rollno, email, history in rows:
+            try:
+                if history == '{}':
+                    absent_rollnos[rollno] = email
+                    continue
+
+                history_dict = json.loads(history)
+
+                if date not in history_dict:
+                    absent_rollnos[rollno] = email
+                    continue
+                if date in history_dict and sub not in history_dict[date]:
+                    absent_rollnos[rollno] = email
 
             except (json.JSONDecodeError, KeyError, TypeError) as e:
                 print(f"Error processing roll number {rollno}: {e}")

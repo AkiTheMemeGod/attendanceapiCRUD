@@ -13,7 +13,7 @@ ADMIN_PASSWORD = "password123"
 
 def get_db():
     if "db" not in g:
-        g.db = sq.connect("student.db")
+        g.db = sq.connect("/home/AkiTheMemeGod/csb_attendance/student.db")
     return g.db
 
 @app.teardown_appcontext
@@ -292,7 +292,7 @@ def api_mark_only_present():
     except for those provided in the list.
     """
     data = request.get_json()
-    roll = data.get('roll').split(',')  # List of roll numbers to mark as present
+    roll = data.get('roll')  # List of roll numbers to mark as present
     sub = data.get('subject')  # Subject to mark as present
 
     if not roll or not sub:
@@ -311,7 +311,7 @@ def api_mark_only_absent():
     except for those provided in the list.
     """
     data = request.get_json()
-    roll = data.get('roll').split(',') # List of roll numbers to exclude from absence
+    roll = data.get('roll')  # List of roll numbers to exclude from absence
     sub = data.get('subject')  # Subject to mark as absent
 
     if not roll or not sub:
@@ -339,26 +339,6 @@ def fetch_daily_absentees():
 
     # Fetch the list of absent roll numbers
     absent_rollnos = db.fetch_daily_absentees(str(date), str(sub))
-
-    return jsonify({"absent_rollnos": absent_rollnos}), 200
-
-@app.route('/fetch_daily_absentees_with_email', methods=['GET'])
-def fetch_daily_absentees_with_mail():
-    connection = get_db()
-    db = Fetch(connection)
-    """
-    API route to get the list of roll numbers of students who were absent
-    for a specific subject on a given date.
-    """
-    # Get the 'date' and 'subject' parameters from the request
-    date = request.args.get('date')
-    sub = request.args.get('subject')
-
-    if not date or not sub:
-        return jsonify({"error": "Both 'date' and 'subject' are required"}), 400
-
-    # Fetch the list of absent roll numbers
-    absent_rollnos = db.fetch_daily_absentees_with_mail(str(date), str(sub))
 
     return jsonify({"absent_rollnos": absent_rollnos}), 200
 
